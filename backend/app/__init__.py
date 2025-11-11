@@ -1,1 +1,1 @@
-"""App package for LLM orchestration services."""
+"""Application package for the backend FastAPI service."""
