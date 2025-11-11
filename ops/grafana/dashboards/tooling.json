@@ -1,0 +1,54 @@
+{
+  "title": "Financial Tooling Overview",
+  "editable": true,
+  "panels": [
+    {
+      "type": "graph",
+      "title": "Tool Usage",
+      "targets": [
+        {
+          "expr": "sum by (tool, adapter) (rate(tool_usage_total[5m]))",
+          "legendFormat": "{{tool}}/{{adapter}}"
+        }
+      ],
+      "datasource": "Prometheus",
+      "gridPos": {"h": 9, "w": 12, "x": 0, "y": 0}
+    },
+    {
+      "type": "heatmap",
+      "title": "Latency Distribution",
+      "targets": [
+        {
+          "expr": "histogram_quantile(0.95, sum(rate(tool_latency_seconds_bucket[5m])) by (le, tool))"
+        }
+      ],
+      "datasource": "Prometheus",
+      "gridPos": {"h": 9, "w": 12, "x": 12, "y": 0}
+    },
+    {
+      "type": "stat",
+      "title": "Average Discussion Cost",
+      "targets": [
+        {
+          "expr": "sum by (channel) (rate(discussion_cost_usd_sum[1h])) / sum by (channel) (rate(discussion_cost_usd_count[1h]))",
+          "legendFormat": "{{channel}}"
+        }
+      ],
+      "datasource": "Prometheus",
+      "gridPos": {"h": 8, "w": 12, "x": 0, "y": 9}
+    },
+    {
+      "type": "table",
+      "title": "Cost by Tool",
+      "targets": [
+        {
+          "expr": "sum by (tool) (rate(discussion_cost_usd_sum[15m]))"
+        }
+      ],
+      "datasource": "Prometheus",
+      "gridPos": {"h": 8, "w": 12, "x": 12, "y": 9}
+    }
+  ],
+  "schemaVersion": 36,
+  "version": 1
+}
