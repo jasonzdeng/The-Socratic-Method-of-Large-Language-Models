@@ -1,5 +1,1 @@
-"""Routers package."""
-
-from . import artifacts
-
-__all__ = ["artifacts"]
+"""API routers for the backend service."""
